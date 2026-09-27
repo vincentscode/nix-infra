@@ -10,16 +10,19 @@
   let
     system = "x86_64-linux";
     unstable = import nixpkgs-unstable { inherit system; };
+
+    mkHost = hostPath: nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit unstable; };
+      modules = [
+        hostPath
+        ./modules/common.nix
+      ];
+    };
   in {
     nixosConfigurations = {
-      dns-02 = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit unstable; };
-        modules = [
-          ./hosts/dns-02
-          ./modules/common.nix
-        ];
-      };
+      dns-01 = mkHost ./hosts/dns-01;
+      dns-02 = mkHost ./hosts/dns-02;
     };
   };
 }
