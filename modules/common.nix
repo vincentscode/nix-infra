@@ -4,6 +4,7 @@
   
   imports = [
     (modulesPath + "/virtualisation/proxmox-lxc.nix")
+    (modulesPath + "/profiles/minimal.nix")
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -12,8 +13,15 @@
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 14d";
 
-  documentation.enable = false;
-  documentation.nixos.enable = false;
+  services.journald.storage = "volatile";
+
+  environment.systemPackages = with pkgs; [
+    perl
+    git
+    wget
+    curl
+    nano
+  ];
 
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
