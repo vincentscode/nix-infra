@@ -1,5 +1,5 @@
 {
-  description = "nix-infra"
+  description = "nix-infra";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
