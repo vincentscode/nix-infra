@@ -12,8 +12,6 @@
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 14d";
 
-  services.nscd.enable = false;
-
   documentation.enable = false;
   documentation.nixos.enable = false;
 
