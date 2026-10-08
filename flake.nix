@@ -18,7 +18,7 @@
 
     mkHost = hostPath: nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit unstable comin; };
+      specialArgs = { inherit unstable comin self; };
       modules = [
         hostPath
         ./modules/common.nix
