@@ -33,6 +33,11 @@
     };
   };
 
+  networking.extraHosts =
+  ''
+    10.0.20.11 ns1.${config.networking.domain}
+  '';
+
   environment.systemPackages = with pkgs; [
     dig
     openssl
