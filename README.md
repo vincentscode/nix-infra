@@ -28,23 +28,31 @@ nix --extra-experimental-features 'nix-command flakes' flake update
 nixos-rebuild switch --flake github:vincentscode/nix-infra[#hostname] --refresh
 ```
 
+## Secret Management (SOPS w/ age)
+
+Getting a public key from a host that should be able to decrypt secrets:
+
+```bash
+cat /etc/ssh/ssh_host_ed25519_key.pub | nix run nixpkgs#ssh-to-age
+```
+
 ## Notes
 
 Evaluating flake outputs for testing before deployment:
 
 ```bash
-podman run --rm -v "$PWD:/flake:Z" -w /flake nixos/nix nix --extra-experimental-features 'nix-command flakes' eval 'git+file:///flake#nixosConfigurations.ns1.config.system.build.toplevel'
+nix --extra-experimental-features 'nix-command flakes' eval 'git+file:///flake#nixosConfigurations.ns1.config.system.build.toplevel'
 ```
 
 Getting the `hostName` output for example:
 
 ```bash
-podman run --rm -v "$PWD:/flake:Z" -w /flake nixos/nix nix --extra-experimental-features 'nix-command flakes' eval 'git+file:///flake#nixosConfigurations.ns1.config.networking.hostName'
+nix --extra-experimental-features 'nix-command flakes' eval 'git+file:///flake#nixosConfigurations.ns1.config.networking.hostName'
 ```
 
 Finding out where it was set:
 
 ```bash
-podman run --rm -v "$PWD:/flake:Z" -w /flake nixos/nix nix --extra-experimental-features 'nix-command flakes' eval --json 'git+file:///flake#nixosConfigurations.ns1.options.networking.hostName.definitionsWithLocations'
+nix --extra-experimental-features 'nix-command flakes' eval --json 'git+file:///flake#nixosConfigurations.ns1.options.networking.hostName.definitionsWithLocations'
 
 ```

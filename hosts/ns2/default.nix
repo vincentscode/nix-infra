@@ -1,6 +1,6 @@
-{ unstable, lib, pkgs, ... }:
+{ unstable, pkgs, ... }:
 {
-  networking.hostName = lib.mkOverride 40 "ns2";
+  networking.hostName = "ns2";
 
   services.technitium-dns-server = {
     package = unstable.technitium-dns-server;

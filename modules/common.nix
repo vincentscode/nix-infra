@@ -1,4 +1,4 @@
-{ modulesPath, pkgs, comin, self, ... }:
+{ modulesPath, pkgs, self, config, comin, sops-nix, flakeUrl, ... }:
 {
   system.stateVersion = "26.05";
   system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -8,7 +8,18 @@
     (modulesPath + "/profiles/minimal.nix")
 
     comin.nixosModules.comin
+    sops-nix.nixosModules.sops
   ];
+
+  proxmoxLXC = {
+    enable = true;
+
+    privileged = false;
+
+    manageNetwork = false;
+    manageHostName = true;
+  };
+
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -24,8 +35,18 @@
     enable = true;
     remotes = [{
       name = "origin";
-      url = "https://github.com/vincentscode/nix-infra.git";
+      url = flakeUrl;
     }];
+  };
+
+  sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "admin@${config.networking.domain}";
+      server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+    };
   };
 
   networking.domain = "schmandt.net";
