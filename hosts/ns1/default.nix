@@ -1,4 +1,4 @@
-{ unstable, pkgs, config, ... }:
+{ unstable, pkgs, lib, config, ... }:
 {
   networking.hostName = "ns1";
 
@@ -19,13 +19,19 @@
     certs = {
       "${config.networking.fqdn}" = {
         domain = config.networking.fqdn;
+        
         dnsProvider = "cloudflare";
         environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
+
+        postRun = ''
+          ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
+        '';
       };
     };
   };
 
   environment.systemPackages = with pkgs; [
     dig
+    openssl
   ];
 }
