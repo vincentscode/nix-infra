@@ -12,7 +12,7 @@
     firewallTCPPorts = [53 443 853 5380 53443];
   };
 
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets.cloudflare-api-token-env = {};
 
   security.acme = {

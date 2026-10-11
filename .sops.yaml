@@ -5,13 +5,13 @@ keys:
   - &ns2 age1m2cslywtkkwupvv807tudwsc9dg9n68nrar3yyxuqlyrsr9ltfpswgwprw
 
 creation_rules:
-  - path_regex: hosts/ns1/secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: hosts/ns1/secrets.yaml$
     key_groups:
     - age:
       - *admin
       - *ns1
 
-  - path_regex: hosts/ns2/secrets/[^/]+\.(yaml|json|env|ini)$
+  - path_regex: hosts/ns2/secrets.yaml$
     key_groups:
     - age:
       - *admin
