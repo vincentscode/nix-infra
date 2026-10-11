@@ -1,4 +1,4 @@
-{ unstable, pkgs, ... }:
+{ unstable, pkgs, lib, config, ... }:
 {
   networking.hostName = "ns2";
 
