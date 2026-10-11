@@ -24,7 +24,9 @@
         environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
 
         postRun = ''
-          ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
+          ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -certfile chain.pem -passout pass:
+          chown 'acme:acme' bundle.pfx
+          chmod 644 bundle.pfx
         '';
       };
     };
