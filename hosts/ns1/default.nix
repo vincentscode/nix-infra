@@ -1,6 +1,8 @@
 { unstable, pkgs, lib, config, ... }:
 {
   networking.hostName = "ns1";
+  
+  services.resolved.settings.Resolve.DNSStubListener = false;
 
   services.technitium-dns-server = {
     package = unstable.technitium-dns-server;
@@ -8,7 +10,7 @@
     enable = true;
 
     openFirewall = true;
-    firewallUDPPorts = [53];
+    firewallUDPPorts = [53 443 853];
     firewallTCPPorts = [53 443 853 5380 53443];
   };
 
@@ -35,7 +37,7 @@
 
   networking.extraHosts =
   ''
-    10.0.20.12 ns2.${config.networking.domain}
+    10.0.20.12 ns2.${config.networking.domain} ns2
   '';
 
   environment.systemPackages = with pkgs; [
