@@ -17,22 +17,30 @@
   sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets.cloudflare-api-token-env = {};
 
-  security.acme = {
-    certs = {
-      "${config.networking.fqdn}" = {
-        domain = config.networking.fqdn;
-        
-        dnsProvider = "cloudflare";
-        environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
+  security.acme.certs."${config.networking.fqdn}" = {
+    domain = config.networking.fqdn;
+    
+    dnsProvider = "cloudflare";
+    environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
 
-        postRun = ''
-          ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -certfile chain.pem -passout pass:
-          chown 'acme:acme' bundle.pfx
-          chmod 644 bundle.pfx
-          chmod 755 .
-        '';
-      };
-    };
+    reloadServices = [
+      "technitium-dns-server"
+    ];
+
+    postRun = ''
+      ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -certfile chain.pem -passout pass:
+      chown 'acme:acme' bundle.pfx
+      chmod 640 bundle.pfx
+    '';
+  };
+
+  # will place the bundle.pfx into /run/credentials/technitium-dns-server.service/
+  systemd.services.technitium-dns-server = let
+    certDir = config.security.acme.certs."${config.networking.fqdn}".directory;
+  in {
+    serviceConfig.LoadCredential = [
+      "bundle.pfx:${certDir}/bundle.pfx"
+    ];
   };
 
   networking.extraHosts =
