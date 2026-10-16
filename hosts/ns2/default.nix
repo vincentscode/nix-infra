@@ -3,8 +3,16 @@
   networking.hostName = "ns2";
 
   imports = [
-    ../../modules/technitium-dns-server.nix
+    ../../modules/dns-server.nix
+    ../../modules/dns-failover.nix
   ];
+
+  services.keepalived.vrrpInstances.dns = {
+    priority = 255 - 2;
+    unicastPeers = [
+      "10.0.20.11" # ns1
+    ];
+  };
 
   sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets.cloudflare-api-token-env = {};
