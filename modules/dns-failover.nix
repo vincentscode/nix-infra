@@ -1,4 +1,4 @@
-{ unstable, pkgs, lib, config, ... }:
+{ pkgs, lib, ... }:
 {
   services.keepalived = {
     enable = true;
