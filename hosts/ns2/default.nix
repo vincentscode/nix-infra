@@ -1,4 +1,15 @@
 { pkgs, config, ... }:
+let
+  service-self-check-heartbeat = pkgs.writeShellApplication {
+    name = "service-self-check-heartbeat";
+    runtimeInputs = with pkgs; [
+      bind.host
+    ];
+    text = ''
+      host example.org 127.0.0.1 > /dev/null 2>&1
+    '';
+  };
+in
 {
   # host configuration
   networking.hostName = "ns2";
@@ -33,5 +44,9 @@
 
   # update-self-check-heartbeat configuration
   sops.secrets.update-healthcheck-url = {};
+
+  # service-self-check-heartbeat configuration
+  sops.secrets.service-healthcheck-url = {};
+  services.service-self-check-heartbeat.script = service-self-check-heartbeat;
 
 }

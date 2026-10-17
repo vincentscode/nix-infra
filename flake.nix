@@ -30,6 +30,7 @@
         hostPath
         ./modules/common.nix
         ./modules/update-self-check-heartbeat.nix
+        ./modules/service-self-check-heartbeat.nix
       ];
     };
   in {
