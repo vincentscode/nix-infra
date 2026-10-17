@@ -23,7 +23,7 @@
     ];
 
     postRun = ''
-      ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -certfile chain.pem -passout pass:
+      ${lib.getExe pkgs.openssl} pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -certfile chain.pem -passout pass:
       chown 'acme:acme' bundle.pfx
       chmod 640 bundle.pfx
     '';

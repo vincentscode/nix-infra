@@ -5,7 +5,7 @@
     openFirewall = true;
 
     vrrpScripts.check-dns = {
-      script = "${lib.getExe' pkgs.bind.dnsutils "host"} example.com 127.0.0.1 > /dev/null 2>&1";
+      script = "${lib.getExe' pkgs.bind.host "host"} example.com 127.0.0.1 > /dev/null 2>&1";
       interval = 5;
       fall = 3;
       rise = 2;
@@ -25,4 +25,8 @@
       ];
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    bind.host
+  ];
 }
