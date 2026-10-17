@@ -8,16 +8,15 @@ let
       gawk
     ];
     text = ''
-      export GIT_TERMINAL_PROMPT=0
-      export HEALTHCHECK_URL=$(cat "${config.sops.secrets.healthcheck-url.path}")
+      healthcheck_url=$(cat "${config.sops.secrets.healthcheck-url.path}")
 
       local_revision=$(nixos-version --configuration-revision)
-      remote_revision=$(timeout 20 git ls-remote ${flakeUrl} refs/heads/main | awk '{print $1}')
+      remote_revision=$(GIT_TERMINAL_PROMPT=0 timeout 20 git ls-remote ${flakeUrl} refs/heads/main | awk '{print $1}')
 
-      if [[ "$local_revision" == "remote_revision" ]]; then
-        curl --retry 3 "$HEALTHCHECK_URL"
+      if [[ "$local_revision" == "$remote_revision" ]]; then
+        curl --retry 3 "$healthcheck_url"
       else
-        curl --retry 3 "$HEALTHCHECK_URL/fail"
+        curl --retry 3 "$healthcheck_url/fail"
       fi
     '';
   };
