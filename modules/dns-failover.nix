@@ -15,11 +15,18 @@ in
     enable = true;
     openFirewall = true;
 
+    extraGlobalDefs = ''
+      use_symlink_paths true
+      enable_script_security
+    '';
+
     vrrpScripts.check-dns = {
       script = "${lib.getExe dns-healthcheck}";
       interval = 5;
+      timeout = 2;
       fall = 3;
       rise = 2;
+      user = "root";
     };
 
     vrrpInstances.dns = {
