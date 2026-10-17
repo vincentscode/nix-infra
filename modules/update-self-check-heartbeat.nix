@@ -8,7 +8,7 @@ let
       gawk
     ];
     text = ''
-      healthcheck_url=$(cat /run/secrets/update-healthcheck-url)
+      healthcheck_url=$(cat /run/credentials/update-self-check-heartbeat.service/update-healthcheck-url)
 
       local_revision=$(nixos-version --configuration-revision)
       remote_revision=$(GIT_TERMINAL_PROMPT=0 timeout 20 git ls-remote ${flakeUrl} refs/heads/main | awk '{print $1}')
