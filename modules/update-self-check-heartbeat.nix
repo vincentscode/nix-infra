@@ -14,9 +14,9 @@ let
       remote_revision=$(GIT_TERMINAL_PROMPT=0 timeout 20 git ls-remote ${flakeUrl} refs/heads/main | awk '{print $1}')
 
       if [[ "$local_revision" == "$remote_revision" ]]; then
-        curl --retry 3 "$healthcheck_url"
+        curl --silent --retry 3 "$healthcheck_url" > /dev/null 2>&1
       else
-        curl --retry 3 "$healthcheck_url/fail"
+        curl --silent --retry 3 "$healthcheck_url/fail" > /dev/null 2>&1
       fi
     '';
   };
@@ -37,8 +37,7 @@ in
     wantedBy = ["timers.target"];
     timerConfig = {
       OnBootSec = "1min";
-      OnUnitActiveSec = "60s";
-      AccuracySec = "1s";
+      OnUnitActiveSec = "5min";
     };
   };
 }
