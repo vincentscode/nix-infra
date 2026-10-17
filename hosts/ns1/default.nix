@@ -32,6 +32,6 @@
   };
 
   # update-self-check-heartbeat configuration
-  sops.secrets.healthcheck-url = {};
+  sops.secrets.update-healthcheck-url = {};
 
 }

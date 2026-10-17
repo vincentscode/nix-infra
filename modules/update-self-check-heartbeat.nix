@@ -8,7 +8,7 @@ let
       gawk
     ];
     text = ''
-      healthcheck_url=$(cat "${config.sops.secrets.healthcheck-url.path}")
+      healthcheck_url=$(cat /run/secrets/update-healthcheck-url)
 
       local_revision=$(nixos-version --configuration-revision)
       remote_revision=$(GIT_TERMINAL_PROMPT=0 timeout 20 git ls-remote ${flakeUrl} refs/heads/main | awk '{print $1}')
@@ -27,6 +27,9 @@ in
       Type = "oneshot";
       DynamicUser = true;
       ExecStart = "${lib.getExe update-self-check-heartbeat}";
+      LoadCredential = [
+        "update-healthcheck-url:${config.sops.secrets.update-healthcheck-url.path}"
+      ];
     };
   };
 
