@@ -29,6 +29,7 @@
       modules = [
         hostPath
         ./modules/common.nix
+        ./modules/update-self-check-heartbeat.nix
       ];
     };
   in {

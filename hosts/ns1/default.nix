@@ -12,6 +12,8 @@
     10.0.20.12 ns2.${config.networking.domain} ns2
   '';
 
+  sops.defaultSopsFile = ./secrets.yaml;
+
   # modules
   imports = [
     ../../modules/dns-server.nix
@@ -19,7 +21,6 @@
   ];
 
   # dns-server configuration
-  sops.defaultSopsFile = ./secrets.yaml;
   sops.secrets.cloudflare-api-token-env = {};
 
   # dns-failover configuration
@@ -29,4 +30,8 @@
       "10.0.20.12" # ns2
     ];
   };
+
+  # update-self-check-heartbeat configuration
+  sops.secrets.healthcheck-url = {};
+
 }
