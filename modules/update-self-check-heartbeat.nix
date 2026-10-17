@@ -15,8 +15,6 @@ let
 
       if [[ "$local_revision" == "$remote_revision" ]]; then
         curl --silent --retry 3 "$healthcheck_url" > /dev/null 2>&1
-      else
-        curl --silent --retry 3 "$healthcheck_url/fail" > /dev/null 2>&1
       fi
     '';
   };
