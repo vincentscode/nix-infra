@@ -56,3 +56,9 @@ Finding out where it was set:
 nix --extra-experimental-features 'nix-command flakes' eval --json 'git+file:///flake#nixosConfigurations.ns1.options.networking.hostName.definitionsWithLocations'
 
 ```
+
+Building derivations for testing:
+```bash
+nix --extra-experimental-features 'flakes' repl .
+# :b nixosConfigurations.ns1.config.services.service-self-check-heartbeat.script
+```
