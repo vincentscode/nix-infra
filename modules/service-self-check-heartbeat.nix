@@ -35,7 +35,7 @@ in
     systemd.timers.service-self-check-heartbeat = {
       wantedBy = ["timers.target"];
       timerConfig = {
-        OnBootSec = "1min";
+        OnBootSec = "15s";
         OnUnitActiveSec = "1min";
         AccuracySec = "1s";
       };
