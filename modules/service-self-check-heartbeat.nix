@@ -10,9 +10,10 @@ let
 
       set +o errexit
       ${lib.getExe config.services.service-self-check-heartbeat.script}
+      EXIT_CODE=$?
       set -o errexit
 
-      curl --silent --retry 3 "$healthcheck_url/$?" > /dev/null 2>&1
+      curl --silent --retry 3 "$healthcheck_url/$EXIT_CODE" > /dev/null 2>&1
     '';
   };
 in
