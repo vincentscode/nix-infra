@@ -114,6 +114,8 @@ in
 
     dnsProvider = "cloudflare";
     environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
+
+    webroot = null;
   };
 
   networking.firewall.allowedTCPPorts = [
