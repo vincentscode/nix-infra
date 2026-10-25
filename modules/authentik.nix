@@ -97,6 +97,7 @@ in
     authentik-worker = authentikSystemdService "worker" workerEnvironment;
   };
 
+  services.nginx.enable = true;
   services.nginx.virtualHosts.${domain} = {
     forceSSL = true;
     enableACME = true;
@@ -107,4 +108,10 @@ in
       proxyWebsockets = true;
     };
   };
+
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
 }
