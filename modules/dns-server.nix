@@ -14,7 +14,7 @@
 
   security.acme.certs."${config.networking.fqdn}" = {
     domain = config.networking.fqdn;
-    
+
     dnsProvider = "cloudflare";
     environmentFile = config.sops.secrets.cloudflare-api-token-env.path;
 

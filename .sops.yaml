@@ -3,6 +3,7 @@ keys:
 
   - &ns1 age1y2qdxvrsnzdlkzgk6ww89h03sh7kfvkgfnceszzvy6223tsajpwqak2pwr
   - &ns2 age1m2cslywtkkwupvv807tudwsc9dg9n68nrar3yyxuqlyrsr9ltfpswgwprw
+  - &sso age1ewmxuu798vuhc6evhz4c0fq6djz2w6z8ns4k5h5mgjgy4wacp93q4my0tx
 
 creation_rules:
   - path_regex: hosts/ns1/secrets.yaml$
@@ -16,3 +17,9 @@ creation_rules:
     - age:
       - *admin
       - *ns2
+
+  - path_regex: hosts/sso/secrets.yaml$
+    key_groups:
+    - age:
+      - *admin
+      - *sso

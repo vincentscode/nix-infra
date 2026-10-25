@@ -1,5 +1,8 @@
 # Nix Infra
 
+![dns](https://healthchecks.io/badge/1eecde22-27fe-4f9f-9ea9-9113e1/6qJeMCwv/dns.svg)
+![sso](https://healthchecks.io/badge/1eecde22-27fe-4f9f-9ea9-9113e1/kaprsaOu-2/sso.svg)
+
 ## Automated Updates
 
 Dependabot automatically creates PRs to update the `flake.lock` file.
@@ -33,8 +36,13 @@ nixos-rebuild switch --flake github:vincentscode/nix-infra[#hostname] --refresh
 Getting a public key from a host that should be able to decrypt secrets:
 
 ```bash
-cat /etc/ssh/ssh_host_ed25519_key.pub | nix run nixpkgs#ssh-to-age
+cat /etc/ssh/ssh_host_ed25519_key.pub | nix --extra-experimental-features 'nix-command flakes' run nixpkgs#ssh-to-age
 ```
+
+## Monitoring
+
+Monitoring is done primarily through self-checks which ping [healthchecks.io](https://healthchecks.io/) on success.
+All hosts implement a custom [service self-check](./modules/service-self-check-heartbeat.nix), which checks the primary service functionality and a standardized [update self-check](./modules/update-self-check-heartbeat.nix), which just verifies that automatic updates are working by comparing the system's revision id with the revision id of this repository.
 
 ## Notes
 
