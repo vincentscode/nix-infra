@@ -77,6 +77,8 @@ in
   };
 
   services.postgresql = {
+    enable = true;
+
     package = pkgs.postgresql;
     ensureDatabases = [ "authentik" ];
     ensureUsers = [
