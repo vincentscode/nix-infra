@@ -35,6 +35,8 @@ let
   };
 
   authentikSystemdService = role: environment: {
+    enable = true;
+
     description = "authentik ${role}";
     wantedBy = [ "multi-user.target" ];
     after = [ "postgresql.service" ];

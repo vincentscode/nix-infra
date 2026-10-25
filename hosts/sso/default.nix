@@ -3,14 +3,14 @@ let
   service-self-check-heartbeat = pkgs.writeShellApplication {
     name = "service-self-check-heartbeat";
     runtimeInputs = with pkgs; [
-      bind.host
+      curl
     ];
     text = ''
-      SERVER_URL=http://127.0.0.1:9000
+      SERVER_URL="http://127.0.0.1:9000"
       curl --silent --fail "$SERVER_URL/-/health/live/" || exit 1
       curl --silent --fail "$SERVER_URL/-/health/ready/" || exit 1
 
-      WORKER_URL=http://127.0.0.1:9001
+      WORKER_URL="http://127.0.0.1:9001"
       curl --silent --fail "$WORKER_URL/-/health/ready/" || exit 1
 
       exit 0
