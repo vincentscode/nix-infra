@@ -30,6 +30,7 @@ in
 
   # authentik configuration
   sops.secrets.authentik-secret-key = {};
+  sops.secrets.cloudflare-api-token-env = {};
 
   # update-self-check-heartbeat configuration
   sops.secrets.update-healthcheck-url = {};
