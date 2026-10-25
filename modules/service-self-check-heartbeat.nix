@@ -8,7 +8,9 @@ let
     text = ''
       healthcheck_url=$(cat /run/credentials/service-self-check-heartbeat.service/service-healthcheck-url)
 
+      set +o errexit
       ${lib.getExe config.services.service-self-check-heartbeat.script}
+      set -o errexit
 
       curl --silent --retry 3 "$healthcheck_url/$?" > /dev/null 2>&1
     '';
