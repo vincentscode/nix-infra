@@ -38,6 +38,7 @@
       ns1 = mkHost ./hosts/ns1;
       ns2 = mkHost ./hosts/ns2;
       sso = mkHost ./hosts/sso;
+      immich = mkHost ./hosts/immich;
     };
   };
 }
