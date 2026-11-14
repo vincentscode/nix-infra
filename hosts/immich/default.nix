@@ -24,11 +24,7 @@ in
     package = unstable.immich;
     enable = true;
     accelerationDevices = null;
-    settings.logging = {
-      enabled = true;
-      level = "warn";
-    };
-    settings.server.externalDomain = "https://${config.networking.fqdn}";
+    settings = null;
   };
 
   services.redis.servers.immich.logLevel = "warning";
