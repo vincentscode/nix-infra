@@ -64,6 +64,11 @@ in
     };
   };
 
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+
   security.acme.certs."${config.networking.fqdn}" = {
     domain = config.networking.fqdn;
 
