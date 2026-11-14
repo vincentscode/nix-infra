@@ -28,7 +28,7 @@ in
       enabled = true;
       level = "warn";
     };
-    settings.server.externalDomain = config.networking.fqdn;
+    settings.server.externalDomain = "https://${config.networking.fqdn}";
   };
 
   services.redis.servers.immich.logLevel = "warning";
