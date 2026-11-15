@@ -4,12 +4,8 @@ let
     name = "service-self-check-heartbeat";
     runtimeInputs = with pkgs; [
       curl
-      redis
-      postgresql
     ];
     text = ''
-      redis-cli -s /run/redis-immich/redis.sock ping | grep -q 'PONG' || exit 1
-      pg_isready | grep -q 'accepting connections' || exit 1
       curl --silent --fail "http://localhost:2283/api/server/ping" | grep -q 'pong' || exit 1
 
       exit 0
