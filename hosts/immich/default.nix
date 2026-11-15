@@ -3,11 +3,12 @@ let
   service-self-check-heartbeat = pkgs.writeShellApplication {
     name = "service-self-check-heartbeat";
     runtimeInputs = with pkgs; [
-      bind.host
+      curl
     ];
     text = ''
-      SERVER_URL="http://127.0.0.1:2283"
-      curl --silent --fail "$SERVER_URL/server/ping" || exit 1
+      redis-cli -s /run/redis-immich/redis.sock ping | grep -q 'PONG' || exit 1
+      pg_isready | grep -q 'accepting connections' || exit 1
+      curl --silent --fail "http://localhost:2283/api/server/ping" | grep -q 'pong' || exit 1
 
       exit 0
     '';
