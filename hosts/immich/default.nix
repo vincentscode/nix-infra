@@ -24,6 +24,8 @@ in
     enable = true;
     accelerationDevices = null;
     settings = null;
+
+    mediaLocation = "/mnt/application-data"
   };
 
   services.redis.servers.immich.logLevel = "warning";
