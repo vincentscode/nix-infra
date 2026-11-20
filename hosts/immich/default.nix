@@ -25,7 +25,7 @@ in
     accelerationDevices = null;
     settings = null;
 
-    mediaLocation = "/mnt/application-data";
+    mediaLocation = "/mnt/application-data/media";
   };
 
   services.redis.servers.immich.logLevel = "warning";
@@ -53,7 +53,16 @@ in
       proxyWebsockets = true;
       recommendedProxySettings = true;
       extraConfig = ''
+        # allow large file uploads
         client_max_body_size 50000M;
+
+        # disable buffering uploads
+        proxy_request_buffering off;
+
+        # increase body buffer to avoid limiting upload speed
+        client_body_buffer_size 1024k;
+
+        # set timeouts
         proxy_read_timeout   600s;
         proxy_send_timeout   600s;
         send_timeout         600s;
