@@ -39,6 +39,7 @@
       ns2 = mkHost ./hosts/ns2;
       sso = mkHost ./hosts/sso;
       immich = mkHost ./hosts/immich;
+      nextcloud = mkHost ./hosts/nextcloud;
     };
   };
 }
