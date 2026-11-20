@@ -6,7 +6,7 @@ let
       curl
     ];
     text = ''
-      curl --silent --fail "http://127.0.0.1/status.php" || exit 1
+      curl --silent --fail --insecure "https://127.0.0.1/status.php" || exit 1
 
       exit 0
     '';

@@ -9,6 +9,9 @@
 
     database.createLocally = true;
 
+    appstoreEnable = true;
+    autoUpdateApps.enable = true;
+
     config = {
       dbtype = "pgsql";
       adminuser = null;
